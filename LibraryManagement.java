@@ -1,13 +1,14 @@
 package study;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 interface LibraryMenuList{
     void displayAccess();
 }
 class LibraryBook{
     private int id;
-    private String name,bookName;
+    private String name,checkIn,CheckOut;
     Long phn;
     ArrayList<String> books = new ArrayList<>(Arrays.asList("Book1","Book2","Book3"));
     public int getId() {
@@ -28,42 +29,25 @@ class LibraryBook{
     public void setPhn(Long phn) {
         this.phn = phn;
     }
-    Scanner sc=new Scanner(System.in);
-    void checkIn(){
-        System.out.println("Book name");
-        bookName=sc.next();
-        if (books.contains(bookName)){
-            System.out.println("Available");
-            books.remove(bookName);
-            for (String book:books) {
-                System.out.println("Books after check in "+book);
-            }
-        }else System.out.println("Not Available");
+    public String getCheckIn() {
+        return this.checkIn;
     }
-   void checkOut(){
-       System.out.println("Book name");
-       bookName=sc.next();
-       System.out.println("Thank you");
-       books.add(bookName);
-       for (String book:books) {
-           System.out.println("Books after check out"+book);
-       }
-   }
+    public void setCheckIn(String checkIn) {
+        if(books.contains(checkIn)) {
+            books.remove(checkIn);
+            this.checkIn = checkIn;
+        }
+        else System.out.println("Not Available");
+    }
+    public String getCheckOut() {
+        return CheckOut;
+    }
+    public void setCheckOut(String checkOut) {
+        CheckOut = checkOut;
+        books.add(checkOut);
+    }
 }
 class Member implements LibraryMenuList{
-    LibraryBook regObj=new LibraryBook();
-    Scanner sc=new Scanner(System.in);
-     void registration(){
-         System.out.println("Enter name :");
-         regObj.setName(sc.next());
-         System.out.println("Enter id :");
-         regObj.setId(sc.nextInt());
-         System.out.print("Enter mobile number");
-         regObj.setPhn(sc.nextLong());
-     }
-     void displayMemberAc(){
-        System.out.println("Name: "+regObj.getName()+"\t\t"+"Id: "+regObj.getId()+"\t\t"+"Mobile Number: "+ regObj.getPhn());
-    }
     public void displayAccess() {
         System.out.println("0.Exit");
         System.out.println("1.Check in");
@@ -73,32 +57,52 @@ class Member implements LibraryMenuList{
 }
 public class LibraryManagement {
     public static void main(String[] args) {
-        Member memberObj = new Member();
-        LibraryBook bookObj=new LibraryBook();
+        List<LibraryBook> list=new ArrayList<>();
+        LibraryBook regObj=new LibraryBook();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Member Registration");
-        int choice;
+        System.out.println("---Welcome---");
+        for(int i=0;i<=2;i++) {
+            System.out.println("Member Registration");
+            System.out.println("Enter name :");
+            regObj.setName(sc.next());
+            System.out.println("Enter id :");
+            regObj.setId(sc.nextInt());
+            System.out.print("Enter mobile number");
+            regObj.setPhn(sc.nextLong());
+            list.add(regObj);
+            System.out.println("Your Member registration number: "+i );
+        }
+        int regNum,choice;
         do {
-            System.out.println("---Welcome---");
+            System.out.println("Enter your registration number");
+            regNum=sc.nextInt();
+            LibraryBook bookObj=list.get(regNum);
             LibraryMenuList menuObj=new Member();
             menuObj.displayAccess();
             System.out.println("Enter your choice");
             choice = sc.nextInt();
             switch (choice) {
                 case 1: {
-                    System.out.println("Enter your id ");
-                    bookObj.setId(sc.nextInt());
-                   bookObj.checkIn();
+                    System.out.println("Enter book name to check in");
+                    bookObj.setCheckIn(sc.next());
+                    System.out.println("'"+bookObj.getCheckIn()+"'"+"is check in by member..");
+                    System.out.println("Books after check in ");
+                    for (String book: bookObj.books) {
+                        System.out.println(book);
+                    }
                 }break;
                 case 2:{
-                    System.out.println("Enter your id ");
-                    bookObj.setId(sc.nextInt());
-                    bookObj.checkOut();
+                    System.out.println("Enter book name to check out ");
+                      bookObj.setCheckOut(sc.next());
+                    System.out.println("'"+bookObj.getCheckOut()+"'"+"is check in by member..");
+                    System.out.println("Books after check out ");
+                    for (String book: bookObj.books) {
+                        System.out.println(book);
+                    }
                 }break;
                 case 3:
                 {
-                    memberObj.registration();
-                    memberObj.displayMemberAc();
+                    System.out.println("Name: "+regObj.getName()+"\t\t"+"Id: "+regObj.getId()+"\t\t"+"Mobile Number: "+ regObj.getPhn());
                 }break;
                 default:
                     System.out.println("Press 0 to exit");
