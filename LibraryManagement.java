@@ -72,8 +72,9 @@ public class LibraryManagement {
             list.add(regObj);
             System.out.println("Your Member registration number: "+i );
         }
-        int regNum,choice;
+        int regNum,choice=1;
         do {
+            try{
             System.out.println("Enter your registration number");
             regNum=sc.nextInt();
             LibraryBook bookObj=list.get(regNum);
@@ -106,6 +107,10 @@ public class LibraryManagement {
                 }break;
                 default:
                     System.out.println("Press 0 to exit");
+                 }
+               }
+                catch(Exception ex){
+                    System.out.println("Number is not registered, try again..");
             }
         } while (choice != 0);
     }
