@@ -47,15 +47,8 @@ class LibraryBook{
         books.add(checkOut);
     }
 }
-class Member implements LibraryMenuList{
-    public void displayAccess() {
-        System.out.println("0.Exit");
-        System.out.println("1.Check in");
-        System.out.println("2.Check out");
-        System.out.println("3.Registration");
-    }
-}
-public class LibraryManagement {
+
+public class LibraryManagement implements LibraryMenuList{
     public static void main(String[] args) {
         List<LibraryBook> list=new ArrayList<>();
         LibraryBook regObj=new LibraryBook();
@@ -78,7 +71,7 @@ public class LibraryManagement {
             System.out.println("Enter your registration number");
             regNum=sc.nextInt();
             LibraryBook bookObj=list.get(regNum);
-            LibraryMenuList menuObj=new Member();
+            LibraryMenuList menuObj=new LibraryManagement();
             menuObj.displayAccess();
             System.out.println("Enter your choice");
             choice = sc.nextInt();
@@ -102,16 +95,21 @@ public class LibraryManagement {
                     }
                 }break;
                 case 3:
-                {
                     System.out.println("Name: "+regObj.getName()+"\t\t"+"Id: "+regObj.getId()+"\t\t"+"Mobile Number: "+ regObj.getPhn());
-                }break;
+                break;
                 default:
                     System.out.println("Press 0 to exit");
                  }
                }
-                catch(Exception ex){
+                catch(IndexOutOfBoundsException ex){
                     System.out.println("Number is not registered, try again..");
             }
         } while (choice != 0);
+    }
+    public void displayAccess() {
+        System.out.println("0.Exit");
+        System.out.println("1.Check in");
+        System.out.println("2.Check out");
+        System.out.println("3.Registration");
     }
 }
