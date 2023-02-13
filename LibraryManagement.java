@@ -61,7 +61,7 @@ public class LibraryManagement {
         LibraryBook regObj=new LibraryBook();
         Scanner sc = new Scanner(System.in);
         System.out.println("---Welcome---");
-        for(int i=0;i<=2;i++) {
+        for(int i=0;i<2;i++) {
             System.out.println("Member Registration");
             System.out.println("Enter name :");
             regObj.setName(sc.next());
